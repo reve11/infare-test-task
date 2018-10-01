@@ -1,0 +1,34 @@
+
+apply plugin: 'scala'
+apply plugin: 'idea'
+
+repositories {
+    mavenCentral()
+}
+
+jar {
+    manifest {
+        attributes (
+                'Main-Class': 'com.example.Main'
+        )
+    }
+}
+
+ext {
+    sparkVersion = "2.2.0"
+    igniteVersion = "2.4.0"
+}
+
+
+dependencies {
+    compile 'org.scala-lang:scala-library:2.11.12'
+    compile 'org.apache.spark:spark-core_2.11:' + sparkVersion
+    implementation 'org.apache.spark:spark-streaming_2.11:' + sparkVersion
+    compile 'org.apache.spark:spark-sql_2.11:' + sparkVersion
+    compile 'org.apache.spark:spark-streaming-kafka_2.11:1.6.3'
+    compile group: 'com.datastax.spark', name: 'spark-cassandra-connector_2.11', version: '2.3.0'
+    compile group: 'org.json4s', name: 'json4s-native_2.11', version: '3.5.4'
+    compile group: 'com.fasterxml.jackson.module', name: 'jackson-module-scala_2.11', version: '2.9.6'
+    compile group: 'org.apache.spark', name: 'spark-sql-kafka-0-10_2.11', version: sparkVersion
+    testCompile group: 'org.scalatest', name: 'scalatest_2.11', version: '3.0.5'
+}

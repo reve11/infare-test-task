@@ -1,0 +1,43 @@
+version: '3.2'
+services:
+  spark-master:
+    networks:
+      - frontend
+    image: 'bde2020/spark-master:2.2.0-hadoop2.7'
+    hostname: 'master'
+    expose:
+      - 7077
+      - 8080
+    ports:
+      - "7077:7077"
+      - "8080:8080"
+    environment:
+      - INIT_DAEMON_STEP=setup_spark
+    volumes:
+      - type: bind
+        source: ./artifacts
+        target: /tmp/source
+  spark-worker:
+    networks:
+      - frontend
+    image: 'bde2020/spark-worker:2.2.0-hadoop2.7'
+    ports:
+      - "8088:8088"
+    expose:
+      - 8088
+    environment:
+      - "SPARK_MASTER=spark://spark-master:7077"
+      - "SPARK_WORKER_WEBUI_PORT=8088"
+    depends_on:
+      - spark-master
+  postgres:
+    networks:
+      - frontend
+    image: 'library/postgres'
+    ports:
+      - "5432:5432"
+    expose:
+      - 5432
+networks:
+  frontend:
+    external: false
