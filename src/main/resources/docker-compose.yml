@@ -31,13 +31,14 @@ services:
     depends_on:
       - spark-master
   postgres:
+    hostname: "postgres"
     networks:
       - frontend
     image: 'library/postgres'
     ports:
-      - "5432:5432"
-    expose:
-      - 5432
+      - "5433:5432"
+#    expose:
+#      - 5433
 networks:
   frontend:
     external: false

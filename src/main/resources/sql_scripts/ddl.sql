@@ -1,0 +1,3 @@
+CREATE ROLE INFARE WITH LOGIN PASSWORD 'infare';
+
+CREATE DATABASE infare_test_task;
